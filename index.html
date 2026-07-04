@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Puri FinC V.1.3A (PWA Edition)</title>
+  <title>Puri FinC V.1.3 (PWA Edition)</title>
   
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -53,13 +53,22 @@
       </div>
     </div>
   </div>
-<div id="form-login" class="flex-1 flex flex-col justify-center items-center px-6 py-12">
+  <div id="form-login" class="flex-1 flex flex-col justify-center items-center px-6 py-12">
     <div class="bg-slate-800 p-8 rounded-2xl shadow-xl w-full max-w-sm border border-slate-700 text-center">
       <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
         <i class="fa-solid fa-house-chimney text-xl text-white"></i>
       </div>
-      <h2 class="text-xl font-bold text-white mb-5">Puri FinC V.1.3A</h2>
+      <h2 class="text-xl font-bold text-white mb-5">Puri FinC V.1.4</h2>
+      
       <div class="space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Akses Aplikasi Ke</label>
+          <select id="sel-target-aplikasi" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 cursor-pointer">
+            <option value="rutin">Iuran Rutin Bulanan (App A)</option>
+            <option value="17an">Kegiatan Event 17an (App B)</option>
+          </select>
+        </div>
+
         <div>
           <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Username</label>
           <input type="text" id="txt-username" class="nav-input w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-blue-500" placeholder="Username">
@@ -125,15 +134,15 @@
     </button>
     <p class="text-xs font-bold uppercase text-slate-500 tracking-wider mb-2 px-1">Pilih Formulir Transaksi</p>
     <div class="space-y-3">
-      <div id="btn-sub-rutin" onclick="bukaWorkspaceTransaksi('Iuran')" class="bg-slate-800 hover:bg-slate-750 p-4 rounded-xl border border-slate-700 cursor-pointer flex items-center space-x-4">
+      <div onclick="bukaWorkspaceTransaksi('Iuran')" class="bg-slate-800 hover:bg-slate-750 p-4 rounded-xl border border-slate-700 cursor-pointer flex items-center space-x-4">
         <div class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-lg flex items-center justify-center"><i class="fa-solid fa-file-invoice"></i></div>
         <div class="flex-1"><h4 class="font-bold text-white text-sm">1. Transaksi Iuran Warga</h4><p class="text-xs text-slate-400">Pembayaran bulanan wajib & rutin</p></div>
       </div>
-      <div id="btn-sub-terima" onclick="bukaWorkspaceTransaksi('Penerimaan')" class="bg-slate-800 hover:bg-slate-750 p-4 rounded-xl border border-slate-700 cursor-pointer flex items-center space-x-4">
+      <div onclick="bukaWorkspaceTransaksi('Penerimaan')" class="bg-slate-800 hover:bg-slate-750 p-4 rounded-xl border border-slate-700 cursor-pointer flex items-center space-x-4">
         <div class="w-10 h-10 bg-emerald-500/10 text-emerald-400 rounded-lg flex items-center justify-center"><i class="fa-solid fa-hand-holding-dollar"></i></div>
         <div class="flex-1"><h4 class="font-bold text-white text-sm">2. Transaksi Penerimaan</h4><p class="text-xs text-slate-400">Kas masuk non-rutin & sukarela</p></div>
       </div>
-      <div id="btn-sub-keluar" onclick="bukaWorkspaceTransaksi('Pengeluaran')" class="bg-slate-800 hover:bg-slate-750 p-4 rounded-xl border border-slate-700 cursor-pointer flex items-center space-x-4">
+      <div onclick="bukaWorkspaceTransaksi('Pengeluaran')" class="bg-slate-800 hover:bg-slate-750 p-4 rounded-xl border border-slate-700 cursor-pointer flex items-center space-x-4">
         <div class="w-10 h-10 bg-amber-500/10 text-amber-400 rounded-lg flex items-center justify-center"><i class="fa-solid fa-money-bill-wave"></i></div>
         <div class="flex-1"><h4 class="font-bold text-white text-sm">3. Transaksi Pengeluaran</h4><p class="text-xs text-slate-400">Biaya operasional & pengeluaran kas</p></div>
       </div>
@@ -421,7 +430,12 @@
   <footer class="w-full text-center py-3 text-[10px] text-slate-600 tracking-wide">Puri FinC &bull; Versi 0.1.3 (Power By PWA Edition)</footer>
 <script>
 
-    const API_URL = "https://script.google.com/macros/s/AKfycbyishmHMMKFqPCCov2vjEz-cSL4NDn7JhLfB8leeoj-CbvE4gEc2MnP1yuk5VdRfmZiZw/exec";
+    // 🔗 Daftarkan kedua alamat URL Macro Google Anda di sini
+    const URL_BACKEND_RUTIN = "https://script.google.com/macros/s/AKfycbyishmHMMKFqPCCov2vjEz-cSL4NDn7JhLfB8leeoj-CbvE4gEc2MnP1yuk5VdRfmZiZw/exec";
+    const URL_BACKEND_17AN  = "https://script.google.com/macros/s/AKfycbybMnFMly_OuhU-9RsPy0wJpCoLNr8JstNJkEZ_BKM6bPHoHnq4H53IlZfHn2JvU5UL2Q/exec";
+
+    // Ubah status API_URL dari 'const' menjadi 'let' agar nilainya bisa kita ganti saat login
+    let API_URL = URL_BACKEND_RUTIN; 
 
     let sessionToken = '';
     let sessionUser = { nama: '', role: '', username: '' };
@@ -555,34 +569,39 @@
     }
 
     async function prosesLogin() {
+      const pilarApp = document.getElementById('sel-target-aplikasi').value;
       const u = document.getElementById('txt-username').value;
       const p = document.getElementById('txt-password').value;
       if(!u || !p) return tampilkanMsgBox("Peringatan", "Username dan Password wajib diisi.", "gagal");
 
-      document.getElementById('btn-login').disabled = true;
-      document.getElementById('btn-login').innerText = "MEMVALIDASI DATABASE...";
-      
-      // 🛡️ KONTROL SUB-MENU TRANSAKSI: Sembunyikan sub-menu jika nilainya 0
-      document.getElementById('btn-sub-rutin').classList.toggle('hidden', sessionAkses.rutin === 0);
-      document.getElementById('btn-sub-terima').classList.toggle('hidden', sessionAkses.terima === 0);
-      document.getElementById('btn-sub-keluar').classList.toggle('hidden', sessionAkses.keluar === 0);
+      // 🎛️ PENENTUAN JALUR: Menyetel alamat API sesuai aplikasi yang dipilih di dropdown
+      if (pilarApp === "17an") {
+        API_URL = URL_BACKEND_17AN;
+      } else {
+        API_URL = URL_BACKEND_RUTIN;
+      }
 
+      document.getElementById('btn-login').disabled = true;
+      document.getElementById('btn-login').innerText = "MEMVALIDASI KE DATABASE...";
+
+      // Menembak fungsi checkLogin ke URL database yang dituju
       const res = await callAPI('checkLogin', { username: u, password: p });
 
       if(res.sukses) {
         sessionToken = res.token;
-
         sessionUser.nama = res.nama; 
         sessionUser.role = res.role;
         sessionUser.username = u;
+        
         document.getElementById('lbl-nama').innerText = res.nama;
         document.getElementById('lbl-role').innerText = res.role;
         
         sessionAkses = res.matriksAkses;
 
+        // Kontrol tombol menu utama sesuai dengan matriks hak akses bawaan
         document.getElementById('btn-transaksi-main').classList.toggle('hidden', sessionAkses.trans === 0);
         document.getElementById('btn-laporan-main').classList.toggle('hidden', sessionAkses.lap === 0);
-        document.getElementById('btn-pengaturan-main').classList.toggle('hidden', sessionAkses.pengaturan === 0);
+        document.getElementById('btn-pengaturan-main').classList.toggle('hidden', sessionAkses.mstData === 0);
 
         masterDatabase = res.master;
         
@@ -604,14 +623,28 @@
 
     function prosesLogout() {
       sessionToken = '';
+      sessionUser = { nama: '', role: '', username: '' };
+      sessionAkses = { trans: 0, lap: 0, mstData: 0, mstUser: 0, mstKunci: 0 };
 
-      const btnLogin = document.getElementById('btn-login'); if (btnLogin) { btnLogin.disabled = false; btnLogin.innerText = "LOG IN"; }
-      document.getElementById('txt-username').value = ''; document.getElementById('txt-password').value = '';
+      // 🧼 PUTIH BERSIH: Kosongkan total kolom isian teks & reset dropdown pilihan
+      document.getElementById('txt-username').value = '';
+      document.getElementById('txt-password').value = '';
+      document.getElementById('sel-target-aplikasi').value = 'rutin'; 
       
-      document.getElementById('form-menu').classList.add('hidden'); document.getElementById('form-submenu-transaksi').classList.add('hidden');
-      document.getElementById('form-submenu-pengaturan').classList.add('hidden'); document.getElementById('form-master-workspace').classList.add('hidden');
-      document.getElementById('form-transaksi-workspace').classList.add('hidden'); document.getElementById('form-submenu-laporan').classList.add('hidden');
-      document.getElementById('form-laporan-workspace').classList.add('hidden'); document.getElementById('form-login').classList.remove('hidden');
+      const btnLogin = document.getElementById('btn-login'); 
+      if (btnLogin) { btnLogin.disabled = false; btnLogin.innerText = "LOG IN"; }
+      
+      // Default kembalikan arah tembakan utama ke rutin
+      API_URL = URL_BACKEND_RUTIN;
+
+      document.getElementById('form-menu').classList.add('hidden'); 
+      document.getElementById('form-submenu-transaksi').classList.add('hidden');
+      document.getElementById('form-submenu-pengaturan').classList.add('hidden'); 
+      document.getElementById('form-master-workspace').classList.add('hidden');
+      document.getElementById('form-transaksi-workspace').classList.add('hidden'); 
+      document.getElementById('form-submenu-laporan').classList.add('hidden');
+      document.getElementById('form-laporan-workspace').classList.add('hidden'); 
+      document.getElementById('form-login').classList.remove('hidden');
     }
 
     function bukaSubMenuLaporan() {
@@ -908,7 +941,6 @@
         return b.nobukti.localeCompare(a.nobukti);
       });
 
-      // 3. Proses cetak ke layar tabel seperti biasa
       if(rincianList.length === 0) {
         tbodyMdl.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-slate-500">Tidak ada rincian mutasi item.</td></tr>';
       } else {
@@ -1142,18 +1174,8 @@
         masterDatabase.keluar.forEach(item => { selKategori.innerHTML += `<option value="${item}">${item}</option>`; });
       }
       
-      // 📑 Mengecek apakah sub-menu ini berstatus Read-Only (bernilai 2)
-      let isReadOnly = false;
-      if (jenisForm === 'Iuran' && sessionAkses.rutin === 2) isReadOnly = true;
-      if (jenisForm === 'Penerimaan' && sessionAkses.terima === 2) isReadOnly = true;
-      if (jenisForm === 'Pengeluaran' && sessionAkses.keluar === 2) isReadOnly = true;
-
-      // Jika Read-Only, sembunyikan container input data (#wrapper-input-transaksi)
-      if (isReadOnly) { 
-        document.getElementById('wrapper-input-transaksi').classList.add('hidden'); 
-      } else { 
-        document.getElementById('wrapper-input-transaksi').classList.remove('hidden'); 
-      }
+      if (sessionAkses.trans === 2) { document.getElementById('wrapper-input-transaksi').classList.add('hidden'); } 
+      else { document.getElementById('wrapper-input-transaksi').classList.remove('hidden'); }
 
       logikaKategoriBerubah(); 
       await muatGridSistem();
@@ -1228,20 +1250,10 @@
       
       dataHalaman.forEach((d, idx) => {
         const noUrut = indexMulai + idx + 1;
-        
-        // 📑 Tentukan apakah user punya hak menghapus data di sub-menu ini (harus bernilai 1)
-        let dapatHapus = false;
-        if (currentWorkspace === 'Iuran' && sessionAkses.rutin === 1) dapatHapus = true;
-        if (currentWorkspace === 'Penerimaan' && sessionAkses.terima === 1) dapatHapus = true;
-        if (currentWorkspace === 'Pengeluaran' && sessionAkses.keluar === 1) dapatHapus = true;
-
         let aksiHtml = '';
-        if (dapatHapus) {
+        if (sessionAkses.trans === 1) {
           aksiHtml = `<button onclick="panggilConfirmBoxCustom('transaksi-hapus', '${d.id_index}', '${d.pencatat}')" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-trash"></i></button>`;
-        } else { 
-          // Jika Read-Only (2) atau Hidden (0), ganti tombol dengan ikon gembok terkunci
-          aksiHtml = `<span class="text-slate-600" title="Akses Terkunci / Hanya Lihat"><i class="fa-solid fa-lock text-xs"></i></span>`; 
-        }
+        } else { aksiHtml = `<span class="text-slate-600" title="Hanya Lihat"><i class="fa-solid fa-lock"></i></span>`; }
 
         tbody.innerHTML += `
           <tr class="border-b border-slate-800 hover:bg-slate-750 text-slate-300">
